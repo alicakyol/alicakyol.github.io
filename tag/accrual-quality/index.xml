@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>accrual quality | Ali Akyol</title>
+    <link>https://alicakyol.github.io/tag/accrual-quality/</link>
+      <atom:link href="https://alicakyol.github.io/tag/accrual-quality/index.xml" rel="self" type="application/rss+xml" />
+    <description>accrual quality</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 30 Jul 2021 17:20:46 -0500</lastBuildDate>
+    <image>
+      <url>https://alicakyol.github.io/media/icon_hu8a7e4f2c9e4c48b6bb498a58f150394e_28744_512x512_fill_lanczos_center_3.png</url>
+      <title>accrual quality</title>
+      <link>https://alicakyol.github.io/tag/accrual-quality/</link>
+    </image>
+    
+    <item>
+      <title>Analyst Experience and Accrual Anomaly: How Do Experienced Analysts Improve Price Efficiency?</title>
+      <link>https://alicakyol.github.io/project/paper3/</link>
+      <pubDate>Fri, 30 Jul 2021 17:20:46 -0500</pubDate>
+      <guid>https://alicakyol.github.io/project/paper3/</guid>
+      <description>&lt;p&gt;We document that the accrual anomaly is substantially mitigated for firms followed by more experienced analysts. We then examine research and monitoring as possible channels through which experience mitigates mispricing. For firms followed by more experienced analysts, we find that forecast revisions and stock prices respond more positively to the accrual component of earnings. We further find that accrual quality is higher in firms followed by more experienced analysts, which holds after using both propensity score matching and exogenous events of brokerage closures and mergers to control for endogeneity. Finally, our results indicate that only years of experience directly covering the firm matter while experience covering other firms is not associated with greater price efficiency. Collectively, our results are consistent with monitoring being the primary mechanism by which experienced analysts reduce accrual mispricing.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
