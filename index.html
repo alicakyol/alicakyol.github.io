@@ -171,6 +171,33 @@
       display: none;
     }
 
+    .nav-toggle {
+      display: none;
+      place-items: center;
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+      border: 1px solid var(--line-strong);
+      background: var(--bg);
+      color: var(--muted);
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .nav-toggle:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .nav-toggle svg {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .nav-toggle svg[data-icon-close] { display: none; }
+    .site-header.is-nav-open .nav-toggle svg[data-icon-menu] { display: none; }
+    .site-header.is-nav-open .nav-toggle svg[data-icon-close] { display: block; }
+
     /* Light mode: show moon (action = switch to dark) */
     html:not([data-theme="dark"]) .theme-toggle svg[data-icon-moon] {
       display: block;
@@ -185,6 +212,7 @@
       max-width: var(--max);
       margin: 0 auto;
       padding: 2rem 1.5rem 3.5rem;
+      min-width: 0;
     }
 
     /* Two-column sections with Vincent-style rail */
@@ -192,6 +220,14 @@
       display: grid;
       gap: 1.25rem;
       padding: 2.4rem 0;
+      min-width: 0;
+      width: 100%;
+    }
+
+    .block > *,
+    .about-block > * {
+      min-width: 0;
+      max-width: 100%;
     }
 
     @media (min-width: 768px) {
@@ -376,6 +412,8 @@
       display: none;
       padding: 1rem 0 0.35rem;
       padding-left: calc(2.25rem + 0.85rem);
+      min-width: 0;
+      max-width: 100%;
     }
 
     @media (min-width: 768px) {
@@ -467,6 +505,12 @@
       display: inline-flex;
       align-items: center;
       gap: 0.28em;
+      max-width: 100%;
+    }
+
+    h3 a.ext,
+    .carousel-card h3 a.ext {
+      display: inline;
     }
 
     .ext-icon {
@@ -505,6 +549,8 @@
       border-radius: 8px;
       padding: 0.85rem 2.25rem 0.85rem 0.85rem;
       overflow-x: auto;
+      max-width: 100%;
+      min-width: 0;
     }
 
     .bibtex pre {
@@ -565,6 +611,8 @@
       gap: 1.5rem;
       padding: 2.4rem 0;
       align-items: start;
+      min-width: 0;
+      width: 100%;
     }
 
     @media (min-width: 768px) {
@@ -750,10 +798,15 @@
 
     .carousel {
       margin: 0 var(--rail-pad) 1.5rem;
+      width: auto;
+      max-width: 100%;
+      min-width: 0;
     }
 
     .carousel-viewport {
       overflow: hidden;
+      max-width: 100%;
+      min-width: 0;
       border-top: 1px solid var(--line-strong);
       border-bottom: 1px solid var(--line-strong);
     }
@@ -764,10 +817,13 @@
       margin: 0;
       padding: 0;
       transition: transform 0.45s ease;
+      min-width: 0;
     }
 
     .carousel-slide {
       flex: 0 0 100%;
+      width: 100%;
+      max-width: 100%;
       min-width: 0;
     }
 
@@ -1065,9 +1121,10 @@
       font-family: "IBM Plex Mono", ui-monospace, monospace;
       font-size: 0.72rem;
       color: var(--muted);
-      width: 5.5rem;
+      width: 6.5rem;
       flex-shrink: 0;
       padding-top: 0.15rem;
+      white-space: nowrap;
     }
 
     .news-row {
@@ -1076,7 +1133,20 @@
       gap: 0.85rem;
     }
 
-    .news-row .body { min-width: 0; flex: 1; }
+    .news-row .body,
+    .paper-row .body { min-width: 0; flex: 1; }
+
+    .rail-item h3,
+    .paper-title,
+    .news-blurb,
+    .paper-venue,
+    .paper-authors,
+    .carousel-card h3,
+    .carousel-card > p,
+    .student-copy,
+    .contact li {
+      overflow-wrap: break-word;
+    }
 
     .news-blurb {
       margin: 0.3rem 0 0;
@@ -1275,6 +1345,97 @@
       background: var(--soft);
     }
 
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.88rem;
+    }
+
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      padding: 0.35rem 0.6rem;
+      border-bottom: 1px solid var(--line);
+      overflow-wrap: break-word;
+    }
+
+    /* Small screens: stack date/year columns, collapse the nav, and let tables scroll. */
+    @media (max-width: 767px) {
+      .site-header-inner,
+      main,
+      footer.site-footer {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      main { padding-top: 1.15rem; padding-bottom: 2.5rem; }
+
+      .site-header-inner {
+        flex-wrap: nowrap;
+        gap: 0.75rem;
+      }
+
+      .header-actions { flex-wrap: nowrap; margin-left: auto; }
+
+      .nav-toggle { display: grid; }
+
+      nav[aria-label="Primary"] {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 30;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.1rem;
+        padding: 0.35rem 0.75rem 0.7rem;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(10px);
+      }
+
+      .site-header.is-nav-open nav[aria-label="Primary"] { display: flex; }
+
+      nav[aria-label="Primary"] a {
+        font-size: 0.95rem;
+        padding: 0.55rem 0.65rem;
+      }
+
+      .block,
+      .about-block { padding: 1.6rem 0; }
+
+      .news-row,
+      .paper-row {
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+
+      .date,
+      .paper-row .year {
+        width: auto;
+        padding-top: 0;
+        white-space: normal;
+      }
+
+      .carousel { margin-left: 0; margin-right: 0; }
+
+      .carousel-card {
+        min-height: 0;
+        padding: 1rem;
+      }
+
+      .people-row { grid-template-columns: 1fr; }
+
+      .meta-grid { grid-template-columns: 1fr; }
+
+      table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -1282,7 +1443,7 @@
     <div class="site-header-inner">
       <a class="brand" href="#about">ali c. akyol</a>
       <div class="header-actions">
-        <nav aria-label="Primary">
+        <nav id="site-nav" aria-label="Primary">
           
           <a href="#about">About</a>
           
@@ -1308,6 +1469,21 @@
           <svg data-icon-sun viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="4"/>
             <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="nav-toggle"
+          data-nav-toggle
+          aria-expanded="false"
+          aria-controls="site-nav"
+          aria-label="Open menu"
+        >
+          <svg data-icon-menu viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+          <svg data-icon-close viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18"/>
           </svg>
         </button>
       </div>
@@ -1497,7 +1673,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2026-07-01</span>
+              <time class="date" datetime="2026-07-01">Jul 1, 2026</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.2139/ssrn.4954055" target="_blank" rel="noopener noreferrer">&#34;Firm-Level Political Risk and Stock Repurchases&#34;</a></h3>
                 <p class="news-blurb">With <a href="https://www.mianwei.net" target="_blank" rel="noopener noreferrer">Mian Wei</a>. Built on a standardized history of corporate repurchase disclosures, 2003–2024.</p>
@@ -1523,7 +1699,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2026-05-01</span>
+              <time class="date" datetime="2026-05-01">May 1, 2026</time>
               <div class="body">
                 <h3><a href="https://telfer.uottawa.ca/en/telfer-knowledge-hub/research-news/telfer-professor-explores-how-the-gig-economy-is-impacting-the-labour-market/" target="_blank" rel="noopener noreferrer">SSHRC Insight Grant awarded</a></h3>
                 <p class="news-blurb">A four-year grant as Principal Investigator.</p>
@@ -1551,7 +1727,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2026-03-15</span>
+              <time class="date" datetime="2026-03-15">Mar 15, 2026</time>
               <div class="body">
                 <h3><a href="#">New working paper: &#34;Paying Attention: Say on Pay and Director Elections&#34;</a></h3>
                 <p class="news-blurb">With <a href="https://smith.queensu.ca/faculty_and_research/faculty_list/calluzzo-paul.php" target="_blank" rel="noopener noreferrer">Paul Calluzzo</a> and <a href="https://www.business.rutgers.edu/faculty/simi-kedia" target="_blank" rel="noopener noreferrer">Simi Kedia</a>. How the Say on Pay vote changed director elections — including ISS unbundling, information effects, and sentiment spillover when SOP support is low.</p>
@@ -1581,7 +1757,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2026-03-03</span>
+              <time class="date" datetime="2026-03-03">Mar 3, 2026</time>
               <div class="body">
                 <h3><a href="https://www.theglobeandmail.com/business/article-how-companies-are-learning-to-stop-worrying-and-benefit-from-pay/" target="_blank" rel="noopener noreferrer">Interview: executive pay and say-on-pay votes</a></h3>
                 <p class="news-blurb">Comments featured in a national feature on how firms are adapting to shareholder votes on compensation.</p>
@@ -1607,7 +1783,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2026-02-15</span>
+              <time class="date" datetime="2026-02-15">Feb 15, 2026</time>
               <div class="body">
                 <h3><a href="#">New working paper: &#34;&#39;What Do All These Vice Presidents Do?&#39;&#34;</a></h3>
                 <p class="news-blurb">With <a href="https://www.saharshabani.com" target="_blank" rel="noopener noreferrer">Sahar Shabani</a>. When excess senior-executive employment creates or destroys shareholder value, and how governance and firm complexity shape the trade-off.</p>
@@ -1637,7 +1813,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2026-02-01</span>
+              <time class="date" datetime="2026-02-01">Feb 1, 2026</time>
               <div class="body">
                 <h3><a href="#">New working paper: &#34;Strategic Use of Share Repurchases&#34;</a></h3>
                 <p class="news-blurb">With <a href="https://www.shaistajaffer.com" target="_blank" rel="noopener noreferrer">Shaista Jaffer</a>.</p>
@@ -1667,7 +1843,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2026-01-20</span>
+              <time class="date" datetime="2026-01-20">Jan 20, 2026</time>
               <div class="body">
                 <h3><a href="#">New working paper: &#34;Interlocks in the Shadow&#34;</a></h3>
                 <p class="news-blurb">With <a href="https://www.saharshabani.com" target="_blank" rel="noopener noreferrer">Sahar Shabani</a>. How big firms lead guidance withdrawal through board interlocks.</p>
@@ -1697,7 +1873,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2025-11-04</span>
+              <time class="date" datetime="2025-11-04">Nov 4, 2025</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.1108/IJMF-12-2024-0683" target="_blank" rel="noopener noreferrer">New publication: Information environment, proprietary costs and disclosure content in firm 10-K reports</a></h3>
                 <p class="news-blurb">With <a href="https://fbe.unimelb.edu.au/our-people/staff/finance/chander-shekhar" target="_blank" rel="noopener noreferrer">Chander Shekhar</a>. Why firms with different information environments disclose different things in their annual reports.</p>
@@ -1725,7 +1901,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2025-06-26</span>
+              <time class="date" datetime="2025-06-26">Jun 26, 2025</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.2139/ssrn.5325614" target="_blank" rel="noopener noreferrer">&#34;Words Before Exit&#34; invited to resubmit at the Journal of Banking and Finance</a></h3>
                 <p class="news-blurb">With Sahar Shabani. CEO linguistic patterns in the run-up to forced turnover, using conference-call sentences matched to the executive who spoke them.</p>
@@ -1751,7 +1927,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2025-05-23</span>
+              <time class="date" datetime="2025-05-23">May 23, 2025</time>
               <div class="body">
                 <h3><a href="https://telfer.uottawa.ca/en/events/202505230830-telfer-conference-on-corporate-finance-and-banking" target="_blank" rel="noopener noreferrer">Telfer Conference on Corporate Finance and Banking</a></h3>
                 <p class="news-blurb">Third edition co-organized, bringing together scholars from Canada, the US, and beyond on governance, M&amp;A, CSR, and banking versus fintech.</p>
@@ -1777,7 +1953,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2025-02-15</span>
+              <time class="date" datetime="2025-02-15">Feb 15, 2025</time>
               <div class="body">
                 <h3>New working paper: &#34;Future-Focused CEOs and Institutional Investors&#34;</h3>
                 <p class="news-blurb">With <a href="https://www.southampton.ac.uk/people/5zg6dm/doctor-atefeh-maghzi" target="_blank" rel="noopener noreferrer">Atefeh Maghzi</a>. Why quasi-indexers may distance themselves from firms led by future-focused CEOs when long-term projects raise perceived information asymmetry.</p>
@@ -1805,7 +1981,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2024-10-19</span>
+              <time class="date" datetime="2024-10-19">Oct 19, 2024</time>
               <div class="body">
                 <h3><a href="https://www.fma.org/Texas" target="_blank" rel="noopener noreferrer">Best Paper Award semifinalist, FMA Annual Meeting</a></h3>
                 <p class="news-blurb">Semifinalist for the Best Paper Award in Corporate Finance for &#34;Corporate Gender Culture&#34; (with Renée B. Adams and Pauline A. Grosjean).</p>
@@ -1833,7 +2009,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2024-05-10</span>
+              <time class="date" datetime="2024-05-10">May 10, 2024</time>
               <div class="body">
                 <h3><a href="https://telfer.uottawa.ca/en/events/20240510-telfer-conference-on-corporate-finance-and-banking/" target="_blank" rel="noopener noreferrer">Telfer Conference on Corporate Finance and Banking</a></h3>
                 <p class="news-blurb">Second edition co-organized.</p>
@@ -1859,7 +2035,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2024-03-23</span>
+              <time class="date" datetime="2024-03-23">Mar 23, 2024</time>
               <div class="body">
                 <h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4770592" target="_blank" rel="noopener noreferrer">New working paper: &#34;Intermediary Power in Corporate Elections&#34;</a></h3>
                 <p class="news-blurb">How a vote-tabulation firm’s decision to withhold interim vote tallies reshapes shareholder proposals and market reactions.</p>
@@ -1889,7 +2065,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2024-01-15</span>
+              <time class="date" datetime="2024-01-15">Jan 15, 2024</time>
               <div class="body">
                 <h3>New working paper: &#34;In Search of Boardroom Chemistry&#34;</h3>
                 <p class="news-blurb">With <a href="https://renee-adams.com/" target="_blank" rel="noopener noreferrer">Renée B. Adams</a> and <a href="https://sites.google.com/site/agygax/" target="_blank" rel="noopener noreferrer">André Gygax</a>. Separating director human capital into knowledge, skill, ability, and experience — and why boards often underweight true skills.</p>
@@ -1917,7 +2093,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2023-05-30</span>
+              <time class="date" datetime="2023-05-30">May 30, 2023</time>
               <div class="body">
                 <h3><a href="https://ssrn.com/abstract=4464155" target="_blank" rel="noopener noreferrer">New working paper: &#34;Within-Firm Pay Inequality and Payout Policies&#34;</a></h3>
                 <p class="news-blurb">With <a href="https://www.mianwei.net" target="_blank" rel="noopener noreferrer">Mian Wei</a>. What happens to dividends and repurchases once firms are required to disclose the ratio of CEO pay to median employee pay.</p>
@@ -1947,7 +2123,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2023-05-19</span>
+              <time class="date" datetime="2023-05-19">May 19, 2023</time>
               <div class="body">
                 <h3><a href="https://telfer.uottawa.ca/en/events/202305190830-telfer-conference-on-corporate-finance-and-banking/" target="_blank" rel="noopener noreferrer">Telfer Conference on Corporate Finance and Banking</a></h3>
                 <p class="news-blurb">Inaugural edition co-organized.</p>
@@ -1973,7 +2149,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2023-04-01</span>
+              <time class="date" datetime="2023-04-01">Apr 1, 2023</time>
               <div class="body">
                 <h3><a href="https://telfer.uottawa.ca/en/telfer-knowledge-hub/wealthier/are-share-repurchases-in-the-best-interest-or-at-the-expense-of-labour" target="_blank" rel="noopener noreferrer">SSHRC Insight Grant awarded</a></h3>
                 <p class="news-blurb">Three-year funding (2023–2025) as Principal Investigator for research on corporate disclosure using textual analysis and machine learning.</p>
@@ -1999,7 +2175,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2023-01-25</span>
+              <time class="date" datetime="2023-01-25">Jan 25, 2023</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.1016/j.jbankfin.2023.106798" target="_blank" rel="noopener noreferrer">How do experienced analysts improve price efficiency?</a></h3>
                 <p class="news-blurb">With Yiming Qian and Frank Yu. Firm-specific analyst experience mitigates return anomalies tied to management discretion, primarily through monitoring rather than research alone.</p>
@@ -2027,7 +2203,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2022-09-02</span>
+              <time class="date" datetime="2022-09-02">Sep 2, 2022</time>
               <div class="body">
                 <h3><a href="https://telfer.uottawa.ca/en/events/202209021300-machine-learning-in-business-modern-approaches-and-applications/" target="_blank" rel="noopener noreferrer">Workshop: Machine Learning in Business — Modern Approaches and Applications</a></h3>
                 <p class="news-blurb">Workshop initiated and organized through the Emerging Technologies sub-cluster.</p>
@@ -2053,7 +2229,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2022-03-29</span>
+              <time class="date" datetime="2022-03-29">Mar 29, 2022</time>
               <div class="body">
                 <h3><a href="https://telfer.uottawa.ca/en/events/202203291000-telfer-research-seminar-series-umit-gurun/" target="_blank" rel="noopener noreferrer">Telfer Research Seminar Series: Umit Gurun</a></h3>
                 <p class="news-blurb">Invited Professor Umit Gurun (University of Texas at Dallas) to present at the series.</p>
@@ -2079,7 +2255,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2021-10-05</span>
+              <time class="date" datetime="2021-10-05">Oct 5, 2021</time>
               <div class="body">
                 <h3><a href="https://telfer.uottawa.ca/en/events/202110051000-mergers-under-the-microscope-analysing-conference-call-transcripts/" target="_blank" rel="noopener noreferrer">Seminar: Mergers Under the Microscope — Analysing Conference Call Transcripts</a></h3>
                 
@@ -2105,7 +2281,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2021-09-22</span>
+              <time class="date" datetime="2021-09-22">Sep 22, 2021</time>
               <div class="body">
                 <h3><a href="https://telfer.uottawa.ca/en/events/202109221000-mergers-under-the-microscope-analysing-conference-call-transcripts/" target="_blank" rel="noopener noreferrer">Seminar: Mergers Under the Microscope — Analysing Conference Call Transcripts</a></h3>
                 
@@ -2131,7 +2307,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2021-07-08</span>
+              <time class="date" datetime="2021-07-08">Jul 8, 2021</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.2139/ssrn.3880650" target="_blank" rel="noopener noreferrer">New working paper: &#34;Corporate Gender Culture&#34;</a></h3>
                 <p class="news-blurb">With Renée B. Adams and Pauline A. Grosjean. Systematic measures of firms’ gender culture from Australian workplace reports — and which dimensions predict women’s leadership representation and firm performance.</p>
@@ -2159,7 +2335,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2020-12-09</span>
+              <time class="date" datetime="2020-12-09">Dec 9, 2020</time>
               <div class="body">
                 <h3><a href="https://telfer.uottawa.ca/en/telfer-knowledge-hub/better-canada/telfer-forums-presents-crisis-and-governance-the-role-of-the-board-during-times-of-disruption/" target="_blank" rel="noopener noreferrer">Crisis and Governance: The Role of the Board During Times of Disruption</a></h3>
                 <p class="news-blurb">Co-organized and spoke at an online forum with corporate director Michelle Savoy (NAV Canada) and senior advisor Tanya Gracie (Central 1 Credit Union). 48 registrations across sectors.</p>
@@ -2185,7 +2361,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2020-06-30</span>
+              <time class="date" datetime="2020-06-30">Jun 30, 2020</time>
               <div class="body">
                 <h3><a href="https://responsiblewealthtransition.com/" target="_blank" rel="noopener noreferrer">Founding member, Center for Responsible Wealth Transition</a></h3>
                 <p class="news-blurb">One of five founding members of an interdisciplinary research center on wealth, governance, and emerging challenges for Canadian organizations and regulators. Coordinator of the Emerging Technologies sub-cluster.</p>
@@ -2213,7 +2389,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2020-06-10</span>
+              <time class="date" datetime="2020-06-10">Jun 10, 2020</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.1108/978-1-78973-417-120201007" target="_blank" rel="noopener noreferrer">Corporate Governance and Fraud</a></h3>
                 <p class="news-blurb">A sole-authored chapter on how board composition, audit quality, external monitors, and internal controls relate to fraud — and how firms rebuild governance after detection.</p>
@@ -2241,7 +2417,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2020-04-08</span>
+              <time class="date" datetime="2020-04-08">Apr 8, 2020</time>
               <div class="body">
                 <h3><a href="https://telfer.uottawa.ca/en/research/innovative-thinking/covid-19-the-financial-markets-and-the-economy/" target="_blank" rel="noopener noreferrer">COVID-19, the financial markets and the economy</a></h3>
                 <p class="news-blurb">Evidence-based commentary on what the pandemic meant for markets and personal portfolios.</p>
@@ -2267,7 +2443,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2019-07-09</span>
+              <time class="date" datetime="2019-07-09">Jul 9, 2019</time>
               <div class="body">
                 <h3><a href="https://sites.duke.edu/thefinregblog/2019/07/09/how-does-the-market-react-when-shareholders-lose-power/" target="_blank" rel="noopener noreferrer">How does the market react when shareholders lose power?</a></h3>
                 
@@ -2291,7 +2467,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2019-03-07</span>
+              <time class="date" datetime="2019-03-07">Mar 7, 2019</time>
               <div class="body">
                 <h3><a href="https://fbe.unimelb.edu.au/conferences/fdu" target="_blank" rel="noopener noreferrer">Finance Down Under Conference</a></h3>
                 <p class="news-blurb">Co-organized the second of two editions of one of the most selective finance conferences internationally.</p>
@@ -2317,7 +2493,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2018-08-14</span>
+              <time class="date" datetime="2018-08-14">Aug 14, 2018</time>
               <div class="body">
                 <h3><a href="https://corpgov.law.harvard.edu/2018/08/14/director-skill-sets/" target="_blank" rel="noopener noreferrer">Article in Harvard Law School Forum on Corporate Governance: Director Skill Sets</a></h3>
                 <p class="news-blurb">Summary of the Journal of Financial Economics paper for a practitioner and legal audience.</p>
@@ -2341,7 +2517,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2018-03-01</span>
+              <time class="date" datetime="2018-03-01">Mar 1, 2018</time>
               <div class="body">
                 <h3><a href="https://fbe.unimelb.edu.au/conferences/fdu" target="_blank" rel="noopener noreferrer">Finance Down Under Conference: Keynote by Nobel Laureate Oliver Hart</a></h3>
                 <p class="news-blurb">Co-organized the edition featuring Professor Oliver Hart as keynote speaker.</p>
@@ -2367,7 +2543,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2017-12-13</span>
+              <time class="date" datetime="2017-12-13">Dec 13, 2017</time>
               <div class="body">
                 <h3><a href="https://theconversation.com/greater-skills-diversity-on-boards-might-actually-be-worse-for-business-88079" target="_blank" rel="noopener noreferrer">Article in The Conversation Australia: Greater skills diversity on boards might actually be worse for business</a></h3>
                 <p class="news-blurb">Findings from one of my research papers written for a general audience.</p>
@@ -2393,7 +2569,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2017-04-16</span>
+              <time class="date" datetime="2017-04-16">Apr 16, 2017</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.1016/j.jfineco.2018.04.010" target="_blank" rel="noopener noreferrer">Director Skill Sets</a></h3>
                 <p class="news-blurb">With Renée B. Adams and Patrick Verwijmeren. The framework has since been built on in the Journal of Financial Economics (2021) and the Review of Financial Studies (2022).</p>
@@ -2421,7 +2597,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2017-02-01</span>
+              <time class="date" datetime="2017-02-01">Feb 1, 2017</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.1016/j.frl.2017.02.001" target="_blank" rel="noopener noreferrer">The Elimination of Broker Voting in Director Elections</a></h3>
                 <p class="news-blurb">With Konrad Raff and Patrick Verwijmeren. Using the SEC’s 2009 reform as a quasi-natural experiment, the elimination of uninstructed broker voting did not increase average equity values.</p>
@@ -2449,7 +2625,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2017-01-30</span>
+              <time class="date" datetime="2017-01-30">Jan 30, 2017</time>
               <div class="body">
                 <h3><a href="#">Financial Institutions, Regulation and Corporate Governance Conference</a></h3>
                 <p class="news-blurb">Co-organized; co-sponsored by Tennis Australia.</p>
@@ -2475,7 +2651,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2016-01-23</span>
+              <time class="date" datetime="2016-01-23">Jan 23, 2016</time>
               <div class="body">
                 <h3><a href="#">Financial Institutions, Regulation and Corporate Governance Conference</a></h3>
                 <p class="news-blurb">Inaugural edition co-organized, bringing together scholars on financial institutions, regulatory policy, and corporate governance.</p>
@@ -2501,7 +2677,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2015-10-17</span>
+              <time class="date" datetime="2015-10-17">Oct 17, 2015</time>
               <div class="body">
                 <h3><a href="https://www.fmaconferences.org/Orlando/2015FMAAnnualMeetingProgram.pdf" target="_blank" rel="noopener noreferrer">Shortlisted for Best Paper Award, FMA Annual Meeting</a></h3>
                 <p class="news-blurb">Shortlisted for the Best Paper Award in Corporate Finance for &#34;Director Skill Sets.&#34;</p>
@@ -2527,7 +2703,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2014-05-26</span>
+              <time class="date" datetime="2014-05-26">May 26, 2014</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.1111/irfi.12035" target="_blank" rel="noopener noreferrer">The Causes and Consequences of Accelerated Stock Repurchases</a></h3>
                 <p class="news-blurb">With Jin S. Kim and Chander Shekhar. Why firms choose accelerated share repurchases over open-market programs, and how ASRs relate to takeover deterrence.</p>
@@ -2555,7 +2731,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2014-05-11</span>
+              <time class="date" datetime="2014-05-11">May 11, 2014</time>
               <div class="body">
                 <h3><a href="https://www.fmaconferences.org/Tokyo/TokyoProgram.pdf" target="_blank" rel="noopener noreferrer">Best Paper Award in Corporate Finance, FMA Asia Conference</a></h3>
                 <p class="news-blurb">Best paper in the corporate finance track for &#34;Director Skill Sets.&#34;</p>
@@ -2581,7 +2757,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2014-04-22</span>
+              <time class="date" datetime="2014-04-22">Apr 22, 2014</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.1016/j.jbankfin.2014.04.020" target="_blank" rel="noopener noreferrer">Do Regulatory Changes Affect IPO Underpricing?</a></h3>
                 <p class="news-blurb">With Tommy Cooper, Michele Meoli, and Silvio Vismara. EU corporate-governance code adoptions reduced IPO underpricing on Member State-regulated markets relative to exchange-regulated markets.</p>
@@ -2609,7 +2785,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2013-08-11</span>
+              <time class="date" datetime="2013-08-11">Aug 11, 2013</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.1108/S1569-3732(2013)0000016002" target="_blank" rel="noopener noreferrer">Who Chooses Board Members?</a></h3>
                 <p class="news-blurb">With Lauren Cohen. Firms that use search firms to find directors pay CEOs more, are less likely to fire underperforming CEOs, and engage in value-destroying M&amp;A.</p>
@@ -2637,7 +2813,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2013-04-25</span>
+              <time class="date" datetime="2013-04-25">Apr 25, 2013</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.1016/j.jfi.2013.04.003" target="_blank" rel="noopener noreferrer">Human capital costs, firm leverage, and unemployment rates</a></h3>
                 <p class="news-blurb">With Patrick Verwijmeren. Firms with higher leverage pay higher wages — evidence that human-capital costs of bankruptcy are an important disadvantage of debt.</p>
@@ -2665,7 +2841,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2012-07-17</span>
+              <time class="date" datetime="2012-07-17">Jul 17, 2012</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.1111/j.1468-2443.2012.01159.x" target="_blank" rel="noopener noreferrer">Share Repurchase Reasons and the Market Reaction to Actual Share Repurchases</a></h3>
                 <p class="news-blurb">With Chi Chong Foo. Australian evidence that the undervaluation motive is a stronger signal than other stated repurchase reasons.</p>
@@ -2693,7 +2869,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2012-06-14</span>
+              <time class="date" datetime="2012-06-14">Jun 14, 2012</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.1017/S0022109012000373" target="_blank" rel="noopener noreferrer">Shareholders in the Boardroom: Wealth Effects of the SEC&#39;s Proposal to Facilitate Director Nominations</a></h3>
                 <p class="news-blurb">With Wei Fen Lim and Patrick Verwijmeren. Shareholder empowerment through director nominations appears to destroy rather than create shareholder value, with markets reacting negatively when the rule’s passage becomes more likely.</p>
@@ -2721,7 +2897,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2011-08-25</span>
+              <time class="date" datetime="2011-08-25">Aug 25, 2011</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.1111/j.1468-2443.2011.01134.x" target="_blank" rel="noopener noreferrer">Governance Characteristics and the Market Reaction to the SEC&#39;s Proxy Access Rule</a></h3>
                 <p class="news-blurb">With Wei Fen Lim and Patrick Verwijmeren. More negative announcement effects for firms more likely to be targeted; the marginal shareholder did not perceive the proposed proxy-access rule as value increasing.</p>
@@ -2749,7 +2925,7 @@
           
           <li class="rail-item">
             <div class="news-row">
-              <span class="date">2011-07-11</span>
+              <time class="date" datetime="2011-07-11">Jul 11, 2011</time>
               <div class="body">
                 <h3><a href="https://doi.org/10.1080/09603107.2011.583214" target="_blank" rel="noopener noreferrer">Stock Returns around Non-Trading Periods: Evidence from an Emerging Market</a></h3>
                 <p class="news-blurb">Sole-authored. Intraday Istanbul Stock Exchange evidence on weekend and holiday effects, and how the length of a non-trading period shapes returns around it.</p>
@@ -4470,7 +4646,7 @@
 
   <footer class="site-footer">
     <span>© 2026 Ali C. Akyol</span>
-    <span>Last updated <time datetime="2026-10-12">Oct 12, 2026</time></span>
+    <span>Last updated <time datetime="2026-10-13">Oct 13, 2026</time></span>
   </footer>
 
   <script>
@@ -4501,6 +4677,36 @@
 
         btn.addEventListener("click", () => setTheme(!isDark()));
         syncButton();
+      })();
+
+      /* Mobile nav */
+      (function initNav() {
+        const header = document.querySelector(".site-header");
+        const toggle = document.querySelector("[data-nav-toggle]");
+        const nav = document.getElementById("site-nav");
+        if (!header || !toggle || !nav) return;
+
+        function setOpen(open) {
+          header.classList.toggle("is-nav-open", open);
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+          toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        }
+
+        toggle.addEventListener("click", () => {
+          setOpen(!header.classList.contains("is-nav-open"));
+        });
+
+        nav.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => setOpen(false));
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") setOpen(false);
+        });
+
+        window.addEventListener("resize", () => {
+          if (window.innerWidth > 767) setOpen(false);
+        });
       })();
 
       /* News highlight carousel */
