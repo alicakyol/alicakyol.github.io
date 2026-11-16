@@ -1384,6 +1384,12 @@
 
       .nav-toggle { display: grid; }
 
+      .site-header {
+        background: var(--bg);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+
       nav[aria-label="Primary"] {
         display: none;
         position: absolute;
@@ -1395,9 +1401,10 @@
         align-items: stretch;
         gap: 0.1rem;
         padding: 0.35rem 0.75rem 0.7rem;
-        background: var(--header-bg);
+        background: var(--bg);
         border-bottom: 1px solid var(--line);
-        backdrop-filter: blur(10px);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
       }
 
       .site-header.is-nav-open nav[aria-label="Primary"] { display: flex; }
@@ -4562,7 +4569,7 @@
 
   <footer class="site-footer">
     <span>© 2026 Ali C. Akyol</span>
-    <span>Last updated <time datetime="2026-11-14">Nov 14, 2026</time></span>
+    <span>Last updated <time datetime="2026-11-16">Nov 16, 2026</time></span>
   </footer>
 
   <script>
